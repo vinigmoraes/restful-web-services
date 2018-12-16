@@ -1,7 +1,7 @@
 package dao
 
 import org.springframework.stereotype.Component
-import user.User
+import entity.User
 import java.util.*
 
 /**

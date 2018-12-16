@@ -12,7 +12,7 @@ import org.springframework.validation.Errors
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
-import user.User
+import entity.User
 import validator.UserRequestValidator
 import java.net.URI
 import javax.validation.Valid
