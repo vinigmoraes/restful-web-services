@@ -3,10 +3,7 @@ package domain.entity
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 import javax.validation.constraints.Past
 import javax.validation.constraints.Size
 
@@ -27,5 +24,7 @@ data class User(
         @Past
         @ApiModelProperty(notes = "Birthday date must be in the past")
         @Column(name="birthday",nullable = false)
-        val birthday: Date = Date()
+        val birthday: Date = Date(),
+        @OneToMany(mappedBy = "user")
+        val posts: List<Post> = emptyList()
 )
