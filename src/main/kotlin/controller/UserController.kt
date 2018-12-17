@@ -1,18 +1,20 @@
 package controller
 
-import dao.UserDAO
-import exception.UserNotFindException
+import entity.User
+import repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.Resource
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.*
+import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
+import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.http.ResponseEntity.*
+import org.springframework.http.ResponseEntity.accepted
+import org.springframework.http.ResponseEntity.created
 import org.springframework.validation.Errors
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
-import entity.User
+import springfox.documentation.annotations.ApiIgnore
 import validator.UserRequestValidator
 import java.net.URI
 import javax.validation.Valid
@@ -22,10 +24,9 @@ import javax.validation.Valid
  */
 
 @RestController()
-class UserController() {
-
-    @Autowired
-    lateinit var userDAO: UserDAO
+class UserController(
+        val userRepository: UserRepository
+){
 
     @InitBinder
     protected fun initBinder(binder: WebDataBinder) {
@@ -35,14 +36,14 @@ class UserController() {
     @GetMapping("/users")
     fun retrieveAllUsers(): List<User> {
 
-        return userDAO.findAll()
+        return userRepository.findAll()
 
     }
 
     @GetMapping("/users/{id}")
     fun findById(@PathVariable id: Int): Resource<User> {
 
-        val user = userDAO.findOne(id) ?: throw UserNotFindException("id - $id")
+        val user = userRepository.findById(id).get()
 
         val resource = Resource<User>(user)
 
@@ -55,8 +56,8 @@ class UserController() {
     }
 
     @PostMapping("/users")
-    fun create(@Valid @RequestBody user: User, errors: Errors): ResponseEntity<String> {
-        val userSaved = userDAO.save(user)
+    fun create(@Valid @RequestBody user: User, @ApiIgnore errors: Errors): ResponseEntity<String> {
+        val userSaved = userRepository.save(user)
 
         when {
 
@@ -71,11 +72,11 @@ class UserController() {
     }
 
     @DeleteMapping("/users/{id}")
-    fun delete(@PathVariable id: Int): User? {
+    fun delete(@PathVariable id: Int): ResponseEntity<String> {
 
-        val userDeleted = userDAO.delete(id)
+        userRepository.deleteById(id)
 
-        return userDeleted ?: throw UserNotFindException("id - $id")
+        return accepted().build()
 
     }
 

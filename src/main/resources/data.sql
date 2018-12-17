@@ -5,6 +5,6 @@ name varchar(255),
 primary key (id));
 
 
-insert into user values(1, sysdate(), 'Gabriel');
-insert into user values(2, sysdate(), 'Joao');
-insert into user values(3, sysdate(), 'Jose');
+insert into user values(100, sysdate(), 'Gabriel');
+insert into user values(102, sysdate(), 'Joao');
+insert into user values(103, sysdate(), 'Jose');
