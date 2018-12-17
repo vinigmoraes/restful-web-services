@@ -1,8 +1,7 @@
-package controller
+package domain.controller
 
-import entity.User
-import repository.UserRepository
-import org.springframework.beans.factory.annotation.Autowired
+import domain.entity.User
+import domain.repository.UserRepository
 import org.springframework.hateoas.Resource
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn

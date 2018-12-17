@@ -7,9 +7,9 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @SpringBootApplication
-@ComponentScan(basePackages = ["controller", "config"])
-@EntityScan(value = "entity")
-@EnableJpaRepositories(value="repository")
+@ComponentScan(basePackages = ["domain/controller", "config"])
+@EntityScan(value = "domain/entity")
+@EnableJpaRepositories(value="domain/repository")
 class RestfulWebServicesApplication
 
 fun main(args: Array<String>) {

@@ -3,7 +3,7 @@ package validator
 import org.springframework.validation.Errors
 import org.springframework.validation.ValidationUtils
 import org.springframework.validation.Validator
-import entity.User
+import domain.entity.User
 import java.util.*
 
 /**
