@@ -1,5 +1,6 @@
 package domain.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 /**
@@ -7,12 +8,18 @@ import javax.persistence.*
  */
 
 @Entity
-class Post(
+data class Post(
         @Id
         @GeneratedValue
-        private val id: Int,
-        private val description: String,
+        val id: Int = 0,
+        val description: String = "",
 
         @ManyToOne(fetch = FetchType.LAZY)
-        private val user: User
-)
+        @field:JsonIgnore
+        val user: User = User()
+) {
+
+        override fun toString(): String {
+                return "Post(id=$id, description='$description')"
+        }
+}

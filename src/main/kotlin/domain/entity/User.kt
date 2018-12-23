@@ -27,4 +27,9 @@ data class User(
         val birthday: Date = Date(),
         @OneToMany(mappedBy = "user")
         val posts: List<Post> = emptyList()
-)
+) {
+
+        override fun toString(): String {
+                return "User(id=$id, name='$name', birthday=$birthday, posts=$posts)"
+        }
+}

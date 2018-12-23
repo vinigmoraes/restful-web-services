@@ -1,7 +1,9 @@
 package domain.controller
 
+import domain.entity.Post
 import domain.entity.User
 import domain.repository.UserRepository
+import exception.UserNotFindException
 import org.springframework.hateoas.Resource
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
@@ -76,6 +78,36 @@ class UserController(
         userRepository.deleteById(id)
 
         return accepted().build()
+
+    }
+
+    @GetMapping("/users/{id}/posts")
+    fun retrieveAllPosts(@PathVariable id: Int): List<Post> {
+
+        val user = userRepository.findById(id)
+
+        if (!user.isPresent) {
+
+            throw UserNotFindException("$id")
+        }
+
+        return user.get().posts
+    }
+
+
+    @PostMapping("/users/{id}/posts")
+    fun createPost(@PathVariable id: Int, @RequestBody post: Post): ResponseEntity<String> {
+
+        val user = userRepository.findById(id)
+
+        if (!user.isPresent) {
+
+            throw UserNotFindException("$id")
+        }
+
+        val location = newUserLocation(user.get().id)
+
+        return created(location).build()
 
     }
 
